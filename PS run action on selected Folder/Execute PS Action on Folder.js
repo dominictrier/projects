@@ -20,7 +20,7 @@ function OpenFolder() {
         var newName = docRef.name.split(".");                                   //split filename for suffix
         var savePath = File(outputFolder + '/' + newName[0] + '.tif');          //generate new safe path
         try {
-            app.doAction(“ACTIONNAME”, “ACTIONSET.atn")                         //run photoshop action
+            app.doAction("ACTIONNAME", "ACTIONSET.atn");                        //run photoshop action
         }
         catch (e) {
             alert("Something went wrong!");
