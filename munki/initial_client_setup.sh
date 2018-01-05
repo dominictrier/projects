@@ -9,10 +9,10 @@ mkdir /Users/Shared/screensaver
 mv /initial_tmp/gsd_background.jpg /Users/Shared/wallpaper/
 mv /initial_tmp/gsd_screensaver.jpg /Users/Shared/screensaver/
 mv /initial_tmp/kcpassword /etc/
-chown -R -v root:staff /Users/Shared/wallpaper/
-chown -R -v root:staff /Users/Shared/screensaver/
-chmod 660 -R /Users/Shared/screensaver/
-chmod 660 -R /Users/Shared/wallpaper/
+chown -R -v staff:staff /Users/Shared/wallpaper/
+chown -R -v staff:staff /Users/Shared/screensaver/
+chmod 755 -R /Users/Shared/screensaver/
+chmod 755 -R /Users/Shared/wallpaper/
 
 # Setup Dock
 /usr/local/bin/dockutil --remove all /Users/staff/
@@ -30,6 +30,7 @@ if [ "$(ioreg -rd1 -c IOPlatformExpertDevice | grep -i "UUID" | cut -c27-50)" !=
     macUUID="$(ioreg -rd1 -c IOPlatformExpertDevice | grep -i "UUID" | cut -c27-62)"
 fi
 # Set Screensaver & Screensaver Lock (Images Provided by pkgfile)
+defaults write /Users/staff/Library/Preferences/ByHost/com.apple.screensaver.$macUUID.plist CleanExit "YES"
 defaults write /Users/staff/Library/Preferences/ByHost/com.apple.screensaver.$macUUID.plist PrefsVersion 100
 defaults write /Users/staff/Library/Preferences/ByHost/com.apple.screensaver.$macUUID.plist idleTime 600
 defaults write /Users/staff/Library/Preferences/ByHost/com.apple.screensaver.$macUUID.plist moduleDict -dict path "/System/Library/Frameworks/ScreenSaver.framework/Resources/iLifeSlideshows.saver" moduleName "iLifeSlideshows" type 0
