@@ -1,14 +1,17 @@
+# ------------------------------------------------------------------------
 # Usage NETSTAT Tool
 netstat -tn
-
+#
 # -t = only show tcp connections
 # -n = to not resolve IPs to Names
-
-
+#
+#
+#
+# ------------------------------------------------------------------------
 # Usage SED Tool
 sed -i 's/original/new/g' file.txt
 sed -i 's/\boriginal\b/new/g' file.txt
-
+#
 # -i = in place
 # s = the substitute command
 # original = a regular expression describing the word to replace (or just the word itself)
@@ -16,16 +19,21 @@ sed -i 's/\boriginal\b/new/g' file.txt
 # g = global (i.e. replace all and not just the first occurrence)
 # /b = match word boundary
 # file.txt = the file name
-
-
+#
+#
+#
+# ------------------------------------------------------------------------
 # Usage Uniq Tool
 uniq -u file.txt
-
+#
 # -u = Print only Unique Lines
-
-
+#
+#
+#
+# ------------------------------------------------------------------------
 # Fix Locale Error (Debian Base)
 locale
+#
 # locale: Cannot set LC_CTYPE to default locale: No such file or directory
 # locale: Cannot set LC_ALL to default locale: No such file or directory
 # LANG=en_US.UTF-8
@@ -43,10 +51,11 @@ locale
 # LC_MEASUREMENT="en_US.UTF-8"
 # LC_IDENTIFICATION="en_US.UTF-8"
 # LC_ALL=
-
+#
+# ------------------------------------------------------------------------
 # Update all locale Settings if needed.
 export LC_ALL="en_US.UTF-8"
-
+#
 # LANG=en_US.UTF-8
 # LANGUAGE=
 # LC_CTYPE="en_US.UTF-8"
@@ -62,11 +71,13 @@ export LC_ALL="en_US.UTF-8"
 # LC_MEASUREMENT="en_US.UTF-8"
 # LC_IDENTIFICATION="en_US.UTF-8"
 # LC_ALL=en_US.UTF-8
-
-
+#
+#
+#
+# ------------------------------------------------------------------------
 # Switch DHCP to STATIC
 sudo nano /etc/network/interfaces
-
+#
 # ------------------------------------------------------------------------
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
@@ -77,7 +88,7 @@ iface lo inet loopback
 # The primary network interface
 auto ens33
 iface ens33 inet dhcp
-
+#
 # ------------------------------------------------------------------------
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
@@ -94,14 +105,52 @@ iface ens33 inet static
         broadcast 192.168.xxx.255
         gateway 192.168.xxx.xxx
         dns-nameservers 192.168.xxx.xxx 192.168.xxx.xxx
+#
 # ------------------------------------------------------------------------
-
 # Lower and Raise Inerface
 sudo ifdown ens33
 sudo ifup ens33
-
-
+#
+#
+#
+# ------------------------------------------------------------------------
 # Remote UFW Rule by Number
 ufw status numbered
 ufw delete 123
-
+#
+#
+#
+# ------------------------------------------------------------------------
+#Get better List for Kill Command
+ps -axco NAME | sort | uniq
+kill -9 ID/NAME (Sigkill)
+kill -15 ID/NAME (Sigterm)
+#
+#
+#
+# ------------------------------------------------------------------------
+# FOR LOOP
+for (( i = 0; i < 10; i++ )); do
+	#statements
+done
+#
+# ------------------------------------------------------------------------
+# DO LOOP
+do
+	#statements
+done
+#
+# ------------------------------------------------------------------------
+# IF LOOP
+if [[ condition ]]; then
+	#statements
+fi
+#
+#
+#
+# ------------------------------------------------------------------------
+# Get Current User (MACOS)
+/bin/ls -l /dev/console | /usr/bin/awk '{ print $3 }'
+#
+#
+#
