@@ -99,3 +99,9 @@ iface ens33 inet static
 # Lower and Raise Inerface
 sudo ifdown ens33
 sudo ifup ens33
+
+
+# Remote UFW Rule by Number
+ufw status numbered
+ufw delete 123
+
