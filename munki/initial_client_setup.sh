@@ -6,13 +6,13 @@ exec >> /log.txt 2>&1
 # Prepare Files & Folders and Move into Place
 mkdir /Users/Shared/wallpaper
 mkdir /Users/Shared/screensaver
+cd /Users/Shared/
 mv /initial_tmp/gsd_background.jpg /Users/Shared/wallpaper/
 mv /initial_tmp/gsd_screensaver.jpg /Users/Shared/screensaver/
 mv /initial_tmp/kcpassword /etc/
-chown -R -v staff:staff /Users/Shared/wallpaper/
-chown -R -v staff:staff /Users/Shared/screensaver/
-chmod 755 -R /Users/Shared/screensaver/
-chmod 755 -R /Users/Shared/wallpaper/
+chown -R -v staff:staff wallpaper/ screensaver/
+chmod 755 -R screensaver/ wallpaper/
+cd /
 
 # Setup Dock
 /usr/local/bin/dockutil --remove all /Users/staff/
@@ -29,6 +29,7 @@ osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/U
 if [ "$(ioreg -rd1 -c IOPlatformExpertDevice | grep -i "UUID" | cut -c27-50)" != "00000000-0000-1000-8000-" ]; then
     macUUID="$(ioreg -rd1 -c IOPlatformExpertDevice | grep -i "UUID" | cut -c27-62)"
 fi
+
 # Set Screensaver & Screensaver Lock (Images Provided by pkgfile)
 defaults write /Users/staff/Library/Preferences/ByHost/com.apple.screensaver.$macUUID.plist CleanExit "YES"
 defaults write /Users/staff/Library/Preferences/ByHost/com.apple.screensaver.$macUUID.plist PrefsVersion 100
@@ -42,16 +43,16 @@ defaults write /Users/staff/Library/Preferences/ByHost/com.apple.ScreenSaverPhot
 defaults write /Users/staff/Library/Preferences/ByHost/com.apple.ScreenSaverPhotoChooser.$macUUID.plist SelectedFolderPath "/Users/Shared/screensaver"
 defaults write /Users/staff/Library/Preferences/ByHost/com.apple.ScreenSaverPhotoChooser.$macUUID.plist SelectedSource 4
 defaults write /Users/staff/Library/Preferences/com.apple.screensaver.plist askForPassword 0
-# Provide Access back to Staff
-chown staff:staff /Users/staff/Library/Preferences/ByHost/com.apple.ScreenSaverPhotoChooser.$macUUID.plist
-chown staff:staff /Users/staff/Library/Preferences/ByHost/com.apple.ScreenSaver.iLifeSlideShows.$macUUID.plist
-chown staff:staff /Users/staff/Library/Preferences/ByHost/com.apple.screensaver.$macUUID.plist
-chown staff:staff /Users/staff/Library/Preferences/com.apple.screensaver.plist
-# Limit File Permissions to Staff to Mirror other plist Files
-chmod 600 /Users/staff/Library/Preferences/ByHost/com.apple.ScreenSaverPhotoChooser.$macUUID.plist
-chmod 600 /Users/staff/Library/Preferences/ByHost/com.apple.ScreenSaver.iLifeSlideShows.$macUUID.plist
-chmod 600 /Users/staff/Library/Preferences/ByHost/com.apple.screensaver.$macUUID.plist
-chmod 600 /Users/staff/Library/Preferences/com.apple.screensaver.plist
+
+# Provide Access back to Staff & Limit File Permissions to Staff to Mirror other plist Files
+cd /Users/staff/Library/Preferences/ByHost/
+chown staff:staff com.apple.ScreenSaverPhotoChooser.$macUUID.plist com.apple.ScreenSaver.iLifeSlideShows.$macUUID.plist com.apple.screensaver.$macUUID.plist
+chmod 600 com.apple.ScreenSaver.iLifeSlideShows.$macUUID.plist com.apple.ScreenSaverPhotoChooser.$macUUID.plist com.apple.screensaver.$macUUID.plist
+cd /Users/staff/Library/Preferences/
+chown staff:staff com.apple.screensaver.plist
+chmod 600 com.apple.screensaver.plist
+cd /
+
 # Force Core Foundation Preferences to Reload
 killall cfprefsd
 
