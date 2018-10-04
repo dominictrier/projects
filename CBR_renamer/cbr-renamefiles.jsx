@@ -92,6 +92,7 @@ function saveTIFF() {
     tiffSaveOptions.layers = true;
     tiffSaveOptions.imageCompression = TIFFEncoding.TIFFLZW;
     tiffSaveOptions.layerCompression = LayerCompression.RLE;
+    // save and close document
     docRef.saveAs(newfile, tiffSaveOptions, true, Extension.LOWERCASE);
     docRef.close(SaveOptions.DONOTSAVECHANGES);
 }
