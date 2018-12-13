@@ -21,7 +21,8 @@ cd /
 /usr/local/bin/dockutil --add /Applications/Managed\ Software\ Center.app /Users/staff/
 
 # Set GSD Wallpaper (Image provided by pkgfile)
-osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/Users/Shared/wallpaper/gsd_background.jpg"'
+# osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/Users/Shared/wallpaper/gsd_background.jpg"'
+osascript -e 'tell application "System Events" to tell every desktop to set picture to "/Users/Shared/wallpaper/gsd_background.jpg"'
 
 
 # Setup Screensaver
