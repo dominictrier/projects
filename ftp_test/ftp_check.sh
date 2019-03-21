@@ -16,6 +16,16 @@ tfn="testfile.zip"                  # Testfile Name
 tfloc="$HOME/Desktop/"              # Testfile Location
 stime=300                           # Sleep Time
 
+# run curl to check if file exists and delete if neeed
+test_exist () {
+	test_url_local=$(ftp://${ftpu}${ftpp}.in.${tfn}.)
+	test_file_local=$(${ftpp}.in.${tfn}.)
+	while ( curl -o /dev/null -sfI ftp://"${test_url_local}" --user "${ftpusr}":"${ftppw}" );do
+		sleep 3
+		curl -s ftp://"${ftpu}" -X 'DELE "${test_file_local}"' --user "${ftpusr}":"${ftppw}"
+	done
+}
+
 # run wget and wput test and echo result back to main shell
 test_upload () {
   ul_val_local=$(wput -u --basename="${tfloc}" "${tfloc}""${tfn}"  ftp://"${ftpusr}":"${ftppw}"@"${ftpu}""${ftpp}" | grep "Transfered" | cut -f8- -d" ")
@@ -39,6 +49,7 @@ fi
 
 # run continous test, echo to shell and append logfile
 while true; do
+  (test_upload)
   echo "$(date) UL $(test_upload)" | tee -a "${lfloc}""${lfn}"
   echo "$(date) DL $(test_download)" | tee -a "${lfloc}""${lfn}"
   echo ""
