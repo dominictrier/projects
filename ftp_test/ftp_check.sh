@@ -1,9 +1,12 @@
 #!/bin/bash
 
 # check FTP Server contionusly for Upload and Download Speeds every 5 Minutes and write Results into Logfile - v1
+# added function to check and remove stuck temporary files that prohibit upload test. (FTP Server Specific) - v1.2
+
 # File for Upload and download needs to be provided. on Upload the File on Server will be overwriten, Downloaded File will be send to /dev/null.
-# tools wget and wput are required (on macos wget and wput can be installed via Homebrew)
-# Last Modified Tue, 24.09.2018 by Dominic (dominic.trier@gmail.com)
+# tools wget and wput are required (on macos wget and wput can be installed via Homebrew (https://brew.sh/) )
+
+# Last Modified Tue, 21.03.2019 by Dominic (dominic.trier@gmail.com)
 
 # define variables
 lfn="wpuget.log.txt"                # Logfile Name
@@ -22,7 +25,7 @@ test_exist () {
 	test_file_local=$(${ftpp}.in.${tfn}.)
 	while ( curl -o /dev/null -sfI ftp://"${test_url_local}" --user "${ftpusr}":"${ftppw}" );do
 		sleep 3
-		curl -s ftp://"${ftpu}" -X 'DELE "${test_file_local}"' --user "${ftpusr}":"${ftppw}"
+		curl -s ftp://"${ftpu}" -X 'DELE "${test_file_local}"' --user "${ftpusr}":"${ftppw}" 2>/dev/null
 	done
 }
 
