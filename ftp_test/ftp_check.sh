@@ -21,11 +21,12 @@ stime=300                           # Sleep Time
 
 # run curl to check if file exists and delete if neeed
 test_exist () {
-	test_url_local=$(ftp://${ftpu}${ftpp}.in.${tfn}.)
-	test_file_local=$(${ftpp}.in.${tfn}.)
-	while ( curl -o /dev/null -sfI ftp://"${test_url_local}" --user "${ftpusr}":"${ftppw}" );do
-		sleep 3
-		curl -s ftp://"${ftpu}" -X 'DELE "${test_file_local}"' --user "${ftpusr}":"${ftppw}" 2>/dev/null
+	test_url_local=ftp://"${ftpu}""${ftpp}".in."${tfn}".
+	test_file_local=.in."${tfn}".
+	while ( curl -o /dev/null -sfI "${test_url_local}" --user "${ftpusr}":"${ftppw}" );do
+		echo "will do"
+		#sleep 3
+		curl -s ftp://"${ftpu}""${ftpp}" -Q "DELE ${test_file_local}" --user "${ftpusr}":"${ftppw}" 2>/dev/null
 	done
 }
 
@@ -44,7 +45,7 @@ echo "this script will run WGET and WPUT every ${stime} seconds and log the resu
 echo "Start Test @ $(date)"
 
 # check for logfile, clean if available, create if not
-if [[ "${lfloc}""${lfn}" ]]; then
+if [[ -f "${lfloc}""${lfn}" ]]; then
   echo "" > "${lfloc}""${lfn}"
 else
   touch "${lfloc}""${lfn}"
@@ -52,7 +53,7 @@ fi
 
 # run continous test, echo to shell and append logfile
 while true; do
-  (test_upload)
+  test_exist
   echo "$(date) UL $(test_upload)" | tee -a "${lfloc}""${lfn}"
   echo "$(date) DL $(test_download)" | tee -a "${lfloc}""${lfn}"
   echo ""
